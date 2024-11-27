@@ -1,0 +1,145 @@
+/* Personaliza la apariencia del menú aquí */
+body {
+  font-family: 'Arial', sans-serif;
+}
+
+nav {
+  background-color: #f8f9fa; /* Color de fondo del menú */
+}
+
+.navbar-brand {
+  font-weight: bold; /* Estilo del nombre del sitio */
+}
+
+.navbar-nav .nav-link {
+  color: #333; /* Color de los enlaces del menú */
+}
+
+.navbar-nav .nav-link:hover {
+  color: #019587; /* Color al pasar el cursor sobre los enlaces */
+}
+
+
+/* style para form de creacion */
+
+/* Personaliza la apariencia del formulario aquí */
+body {
+  font-family: 'Arial', sans-serif;
+}
+
+.container {
+  max-width:1400px; /* Ajusta el ancho máximo del formulario */
+  padding: 20px;
+  border-radius: 10px; /* Bordes redondeados para un aspecto moderno */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombra sutil */
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+textarea {
+  height: 150px;
+}
+
+button[type="submit"] {
+  background-color: #CCEA8D; /* Azul Bootstrap */
+  color: black;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3; /* Azul Bootstrap más oscuro al pasar el cursor */
+}
+
+
+/* campos desplegables */
+/* Estilos para campos desplegables */
+select {
+  width: 100%; /* Ancho completo del contenedor */
+  padding: 10px; /* Mismo relleno que los demás campos */
+  border: 1px solid #ccc; /* Mismo borde que los demás campos */
+  border-radius: 5px; /* Mismo borde redondeado que los demás campos */
+  margin-bottom: 15px; /* Mismo margen inferior que los demás campos */
+  appearance: none; /* Ocultar el aspecto predeterminado del select */
+  background-image: url("data:image/svg+xml;base64,CAAAABAAAAD/tlwIAAAACMcIYT+/2q7/7q7/963v/87Pv/973v/7q7/7q7/963v/++7v/++7v/++7v/++7v/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+ur7/+
+)}
+
+
+/* estilos para la tabla de consultar */
+/* Estilos para la tabla */
+table {
+  width: 100%; /* Ancho completo de la tabla */
+  border-collapse: collapse; /* Quitar bordes entre celdas */
+  margin: 20px 0; /* Margen superior e inferior */
+}
+
+table tbody td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+th, td {
+  padding: 10px; /* Relleno en celdas */
+  border: 1px solid #ccc; /* Borde gris claro para las celdas */
+  text-align: left; /* Alineación de texto a la izquierda */
+}
+
+th {
+  background-color: #f2f2f2; /* Color de fondo para encabezados */
+  font-weight: bold; /* Texto en negrita para encabezados */
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #fff; /* Color de fondo alterno para filas pares */
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f5f5f5; /* Color de fondo alterno para filas impares */
+}
+
+a {
+  color: #007bff; /* Color de los enlaces */
+  text-decoration: none; /* Quitar subrayado de enlaces */
+}
+
+a:hover {
+  color: #0056b3; /* Color al pasar el cursor sobre los enlaces */
+}
+
+
+/* footer */
+.container {
+  /* ... otros estilos ... */
+  margin-bottom: 60px; /* Altura del footer */
+}
+
+footer {
+  position: fixed; /* Posicionamiento fijo */
+  bottom: 0; /* Pegar al final de la página */
+  height: 60px;
+  width: 100%; /* Ancho completo */
+  z-index: 100; /* Asegurar que esté sobrepuesto a otros elementos */
+}
+

@@ -1,0 +1,106 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>Cerrar sesion</h2>
+        <p>Estas seguro de que quieres cerrar sesion?</p>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">Cerrar Sesion</button>
+        </form>
+    </div>
+</body>
+</html>
+
+
+
+
+<div class="container mt-5">
+    <h2>Iniciar sesion</h2>
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.username.label_tag }}
+            {{ form.username }} 
+        </div>
+        <div class="form-group">
+            {{ form.password.label_tag }}
+            {{ form.password }}
+        </div>
+        <button type="submit" class="btn btn-primary">Iniciar sesion</button>
+    </form>
+</div>
+
+
+
+
+/* Estilos para formulario de inicio de sesión */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #D8FFDB;
+  }
+  
+  .container {
+    max-width: 400px; /* Ajusta el ancho máximo del formulario */
+    padding: 20px;
+    border-radius: 10px; /* Bordes redondeados para un aspecto moderno */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombra sutil */
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+  }
+  
+  button[type="submit"] {
+    background-color: #007bff; /* Azul Bootstrap */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #0056b3; /* Azul Bootstrap más oscuro al pasar el cursor */
+  }
+
+  .container {
+    /* ... otros estilos ... */
+    margin: 0 auto; /* Centrar horizontalmente */
+    position: absolute; /* Posicionamiento absoluto */
+    top: 50%; /* Posicionamiento vertical desde el centro superior */
+    left: 50%; /* Posicionamiento horizontal desde el centro izquierdo */
+    transform: translate(-50%, -50%); /* Ajustar la posición para evitar superposición */
+    width: 400px; /* Aumenta el ancho del contenedor */
+    max-width: 80%; /* Limita el ancho máximo para pantallas pequeñas */
+  }
+
+  /* ajustando campos de texto */
+input[type="text"],
+input[type="password"] {
+  /* ... otros estilos ... */
+  width: calc(100% - 20px); /* Resta el ancho del borde y el relleno */
+}

@@ -1,0 +1,86 @@
+/* Estilos para la página */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  height: 100vh;
+}
+
+.split {
+  position: fixed;
+  width: 50%;
+  height: 100%;
+  top: 0;
+}
+
+.left {
+  left: 0;
+  background-color: #CCEA8D;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.right {
+  right: 0;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  max-width: 400px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  background-color: #fff;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: calc(100% - 24px); /* Ajustar el ancho */
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+button[type="submit"] {
+  background-color: #019587; /* Azul Bootstrap */
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3; /* Azul Bootstrap más oscuro al pasar el cursor */
+}
+
+.centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.centered img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 10px; /* Opcional: para que la imagen tenga bordes redondeados */
+}

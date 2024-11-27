@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Pagina principal{% endblock %}
+
+{% block content %}
+
+<div>
+  <h3>Operacion Cable - Control de paradas en las cabinas</h3>
+</div>
+
+<script src="{% static 'js/test.js' %}"></script>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <div class="alert alert-dark" role="alert">
+        <h4><strong>Total de paradas - {{ Paradas|length }}</strong></h4>
+        <i> Ultima actualizacion {{ Fecha_hora }}</i>
+      </div>
+    </div>
+    <div class="col-md-6 mb-3">
+      <div class="alert alert-dark" role="alert">
+        <h4><strong>Total paradas del dia: {{ Paradas_dia|length }}</strong></h4> <i> Ultima actualizacion {{ Fecha_hora }}</i>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="card">
+  <div class="card-header">
+    <h5><strong>Estaciones</strong></h5>
+  </div>
+  <div class="est"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card text-bg-danger mb-3" style="width: 18rem;">
+          <img src="{% static 'img/tunal.jpg' %}" class="card-img-top img-fluid" alt="Estacion Tunal"
+            style="height: 150px; object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title">Tunal</h5>
+            <p class="card-text">Total - {{ paradas_station|length }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card text-bg-success mb-3" style="width: 18rem;">
+          <img src="{% static 'img/JuanPabloII.jpg' %}" class="card-img-top img-fluid" alt="Estacion Juan Pablo II"
+            style="height: 150px; object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title">Juan Pablo II</h5>
+            <p class="card-text">Total - {{ paradas_station3|length }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card text-bg-warning mb-3" style="width: 18rem;">
+          <img src="{% static 'img/manitas2.jpeg' %}" class="card-img-top img-fluid" alt="Estacion Manitas"
+            style="height: 150px; object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title">Manitas</h5>
+            <p class="card-text">Total - {{ paradas_station2|length }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card text-bg-secondary mb-3" style="width: 18rem;">
+          <img src="{% static 'img/paraiso.jpg' %}" class="card-img-top img-fluid" alt="Estacion Paraiso"
+            style="height: 150px; object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title">Paraiso</h5>
+            <p class="card-text">Total - {{ paradas_station4|length }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="est"></div>
+  </div>
+
+
+
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        <h5><strong>Por eventos</strong></h5>
+      </div>
+      <div class="row">
+        <div class="col-md-3 mb-3">
+          <div class="alert alert-warning" role="alert">
+            <h6 class="card-title">Evacuacion del sistema</h6>
+            <p class="card-text">{{ tipo_evento1|length }}</p>
+          </div>
+        </div>
+        <div class="col-md-3 mb-3">
+          <div class="alert alert-warning" role="alert">
+            <h6 class="card-title">Fallas del sistema</h6>
+            <p class="card-text">{{ tipo_evento2|length }}</p>
+          </div>
+        </div>
+        <div class="col-md-3 mb-3">
+          <div class="alert alert-warning" role="alert">
+            <h6 class="card-title">Detenciones externas</h6>
+            <p class="card-text">{{ tipo_evento3|length }}</p>
+          </div>
+        </div>
+        <div class="col-md-3 mb-3">
+          <div class="alert alert-warning" role="alert">
+            <h6 class="card-title">Cambio de velocidad</h6>
+            <p class="card-text">{{ tipo_evento4|length }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+</div>
+{% endblock %}

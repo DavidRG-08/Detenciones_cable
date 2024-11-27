@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesion</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/log_in.css' %}" />
+
+</head>
+
+<body>
+    <div class="split left">
+        <div class="container mt-5">
+            <div class="container">
+                <div class="centered">
+                    <img src="{% static 'img/Vertical-3-1.png' %}" alt="logo de la rolita-cable" width="300">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="split right">
+        <div class="container">
+            <h1>Inicio de Sesión</h1>
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{ form.username.label_tag }}
+                    {{ form.username }}
+                </div>
+                <div class="form-group">
+                    {{ form.password.label_tag }}
+                    {{ form.password }}
+                </div>
+
+                <button type="submit" class="btn btn-primary">Iniciar sesion</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+
