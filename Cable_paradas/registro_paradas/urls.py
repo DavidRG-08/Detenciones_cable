@@ -13,4 +13,10 @@ urlpatterns = [
     path('reports_stops/', views.generate_report, name='report_stop'),
     path('load_stop_codes/', views.load_stop_codes, name='load_stop_codes'),
 
+    # Pestaña registro de operacion
+    path('create_transaction_record/', views.operating_day, name='create_transaction_record'),
+    path('list_of_operational/', views.operational_day_list, name='list_of_operational'),
+    path('report_operation/', views.generate_report_operation_day, name='report_operation'),
+    path('transaction_record/update/<pk>', views.update_operation_day, name='record_update'),
+
 ]

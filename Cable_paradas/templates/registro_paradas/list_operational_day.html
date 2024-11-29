@@ -1,29 +1,30 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}Consultar eventos{% endblock %}
+{% block title %}Consultar jornadas{% endblock %}
 {% block content %}
 
 <div class="container mt-5">
-    <h1>Lista de registros de paradas</h1>   
+    <h1>Registros de operacion</h1>   
 
     <!-- Formulario de filtro de fechas -->
-    <form method="get" class="mb-4" action="{% url 'list_of_stop' %}"">
+    <form method="get" class="mb-4" action="{% url 'list_of_operational' %}"">
         <div class="container">
             <div class="row align-items-center">
                 <div class="form-group col-md-6 d-flex justify-content-right">
-                    <label for="start_date">Fecha inicio</label>
-                    <input type="date" id="start_date" name="start_date" class="form-control" value="{{ request.GET.start_date }}">
+                    <label for="start_date_op">Fecha inicio</label>
+                    <input type="date" id="start_date_op" name="start_date_op" class="form-control" value="{{ request.GET.start_date_op }}">
                 </div>
                 <div class="form-group col-md-6 d-flex justify-content-right">
-                    <label for="end_date">Fecha fin</label>
-                    <input type="date" id="end_date" name="end_date" class="form-control" value="{{ request.GET.end_date }}">
+                    <label for="end_date_op">Fecha fin</label>
+                    <input type="date" id="end_date_op" name="end_date_op" class="form-control" value="{{ request.GET.end_date_op }}">
                 </div>
                 <div class="form-group col-md-6 d-flex justify-content-right">
                     
                     <input class="input-submit btn btn-outline-primary w-100" type="submit" value="Filtrar" />
                 </div>
+                <!-- Boton reporte excel -->
                 <div class="form-group col-md-6 d-flex justify-content-right">
-                    <a href="{% url 'report_stop' %}?start_date={{ request.GET.start_date }}&end_date={{ request.GET.end_date }}" 
+                    <a href="{% url 'report_operation' %}?start_date={{ request.GET.start_date_op }}&end_date={{ request.GET.end_date_op }}" 
                         class="btn btn-outline-success w-100" role="button" aria-pressed="true">Exportar a Excel</a>
 
                     
@@ -37,37 +38,26 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th scope="col">Fecha parada</th>
+                    <th scope="col">Fecha</th>
                     <th scope="col">Hora inicio</th>
                     <th scope="col">Hora fin</th>
-                    <th scope="col">Tiempo (seg)</th>
-                    <th scope="col">Estacion</th>
-                    <th scope="col">Cab1</th>
-                    <th scope="col">Cab2</th>
-                    <th scope="col">Turno</th>
-                    <th scope="col">Inputable</th>
-                    <th scope="col">Tipo de evento</th>
-                    <th scope="col">Motivo detencion</th>
-                    <th scope="col">operador</th>
-                    <th scope="col">Observaciones</th>
+                    <th scope="col">Horometro inicio</th>
+                    <th scope="col">Horometro fin</th>
+                    <th scope="col">Tiempo total</th>
+                    <th scope="col">Operador</th>
                 </tr>
             </thead>
             <tbody class="table-group-divider" >
-                {% for registro in page_obj %}
+                {% for record in page_obj_ope %}
                 <tr>
-                    <td>{{ registro.registration_date|date:"d-m-Y" }}</td>
-                    <td>{{ registro.start_date }}</td>
-                    <td>{{ registro.end_date }}</td>
-                    <td>{{ registro.stop_time }}</td>
-                    <td>{{ registro.station }}</td>
-                    <td>{{ registro.cabin }}</td>
-                    <td>{{ registro.cabin2 }}</td>
-                    <td>{{ registro.shift }}</td>
-                    <td>{{ registro.inputable }}</td>
-                    <td>{{ registro.event_type }}</td>
-                    <td>{{ registro.stop_code_name }}</td>
-                    <td>{{ registro.operator }}</td>
-                    <td>{{ registro.observation }}</td>
+                    <td>{{ record.date|date:"d-m-Y" }}</td>
+                    <td>{{ record.start_time }}</td>
+                    <td>{{ record.end_time }}</td>
+                    <td>{{ record.horometer_start }}</td>
+                    <td>{{ record.horometer_end }}</td>
+                    <td>{{ record.total_time }}</td>
+                    <td>{{ record.operator }}</td>
+                    <td><a href="{% url 'record_update' record.id %}" class="btn btn-outline-warning" role="button" aria-pressed="true">Editar</a></td>
                 </tr>
                 {% empty %}
                 <tr>

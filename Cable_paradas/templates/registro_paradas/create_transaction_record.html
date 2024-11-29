@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Inicio y fin de la operacion{% endblock %}
+
+{% block extra_css %}
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container mt-5">
+    <h1>Registrar inicio y fin de la operacion de cable</h1>
+    {{ form.media }}
+    <form method="post" id="operation-time-form">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          {{ form.date.label_tag }}
+          {{ form.date }}
+        </div>
+        <div class="col-md-4 mb-3">
+          {{ form.start_time.label_tag }}
+          {{ form.start_time }}
+        </div>
+        <div class="col-md-4 mb-3">
+            {{ form.end_time.label_tag }}
+            {{ form.end_time }}
+          </div>
+        <div class="col-md-6 mb-3">
+          {{ form.horometer_start.label_tag }}
+          {{ form.horometer_start }}
+        </div>
+        <div class="col-md-6 mb-3">
+          {{ form.horometer_end.label_tag }}
+          {{ form.horometer_end }}
+        </div>
+        <div class="col-md-12">
+          <button type="submit" class="btn btn-success">Guardar Registro</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+
+
+{% endblock %}

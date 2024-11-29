@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from .models import StopRegistration
+from .models import StopRegistration, OperationTime
 from django import forms
 
 
@@ -81,3 +81,23 @@ class FormRegister(forms.ModelForm):
             return cleaned_data
         
         
+class FormOperatingDay(forms.ModelForm):
+    class Meta:
+        model = OperationTime
+        fields = ['date','start_time','horometer_start','end_time','horometer_end']
+
+        labels = {
+            "date": "Fecha",
+            "start_time": "Hora Inicio", 
+            "horometer_start": "Horometro inicio operacion",
+            "end_time": "Hora Fin",
+            "horometer_end": "Horometro fin operacion"
+        }
+
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'}),
+            'start_time': forms.TimeInput(attrs={'type': 'time', 'class': 'form-control', 'step': 1}),
+            'end_time': forms.TimeInput(attrs={'type': 'time', 'class': 'form-control', 'step': 1}),
+            'horometer_start': forms.NumberInput(attrs={'type': 'number', 'placeholder': 'Ingrese el horómetro inicial','class': 'form-control'}),
+            'horometer_end': forms.NumberInput(attrs={'type': 'number', 'placeholder': 'Ingrese el horómetro final','class': 'form-control'})
+        }

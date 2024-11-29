@@ -1,10 +1,10 @@
-from .forms import FormRegister, LoginForm, RegistroForm
+from .forms import FormRegister, LoginForm, RegistroForm, FormOperatingDay
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .models import StopRegistration, EventStopCode
-from django.shortcuts import render, redirect
+from .models import StopRegistration, EventStopCode, OperationTime
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
-from .reports import ReporterExcelStop
+from .reports import ReporterExcelStop, ReporterExcelOperatorDay
 from django.contrib import messages
 from django.db.models import Q
 from django.http import JsonResponse
@@ -170,7 +170,7 @@ def grafico_datos(request):
     return render(request, 'registro_paradas/grafico.html')
 
 
-# Vista para descargar el reporte en excel
+# Vista para descargar el reporte en excel de detenciones
 @login_required
 def generate_report(request):
     # Obtener los filtros de fecha
@@ -219,3 +219,89 @@ def load_stop_codes(request):
         return JsonResponse(stop_code_list, safe=False)
     
     return JsonResponse({'error': 'Invalid event_type'}, status=400)
+
+
+# Vista para registrar la hora de inicio y fin de la operacion
+@login_required
+def operating_day(request):
+    if request.method == 'POST':
+        form = FormOperatingDay(request.POST)
+        if form.is_valid():
+            register = form.save(commit=False)
+            register.operator = request.user
+            form.save()
+            messages.success(request, 'Registro creado correctamente')
+            return redirect('create_transaction_record')
+        else:
+            messages.error(request, 'Hubo un error al momento de insertar el registro, valide nuevamente la informacion')
+    else:
+        form = FormOperatingDay()
+    
+    return render(request, 'registro_paradas/create_transaction_record.html', {'form': form})
+
+
+@login_required
+def operational_day_list(request):
+    records = OperationTime.objects.all().order_by('-date')
+
+    # Rango de fechas
+    start_date_op = request.GET.get('start_date_op')
+    end_date_op = request.GET.get('end_date_op')
+
+    if start_date_op and end_date_op:
+        try:
+            start_date_op = datetime.strptime(start_date_op, '%Y-%m-%d').date()
+            end_date_op = datetime.strptime(end_date_op, '%Y-%m-%d').date()
+
+            records = records.filter(
+                date__gte = start_date_op,
+                date__lte = end_date_op
+            )
+        except ValueError:
+            pass
+    
+
+    paginator = Paginator(records, 20)
+    page_number = request.GET.get('page')
+    page_obj_ope = paginator.get_page(page_number)
+
+    return render(request, 'registro_paradas/list_operational_day.html', {'page_obj_ope': page_obj_ope})
+
+
+# Vista para descargar el reporte en excel de detenciones
+@login_required
+def generate_report_operation_day(request):
+    # Obtener los filtros de fecha
+    start_date_op = request.GET.get('start_date_op')
+    end_date_op = request.GET.get('end_date_op')
+    
+    # Parsear las fechas usando parse_date para convertir de string a date
+    if start_date_op:
+        start_date_op = parse_date(start_date_op)
+    if end_date_op:
+        end_date_op = parse_date(end_date_op)
+    
+    print(f"Start date: {start_date_op}, End Date: {end_date_op}")
+    
+    # Consulta para filtrar los registros
+    queryset = OperationTime.objects.all()
+    if start_date_op and end_date_op:
+        queryset = queryset.filter(date__gte = start_date_op, date__lte = end_date_op)
+        
+    # Generar el reporte solo con los registros filtrados
+    report = ReporterExcelOperatorDay(queryset)
+    return report.get(request)
+
+
+def update_operation_day(request, pk):
+    instancia = get_object_or_404(OperationTime, pk=pk)
+    if request.method == 'POST':
+        form = FormOperatingDay(request.POST, instance=instancia)
+        if form.is_valid():
+            form.save()
+            return redirect('list_of_operational')  # URL redireccion success
+    
+    else:
+        form = FormOperatingDay(instance=instancia)
+    
+    return render(request, 'registro_paradas/update_operation_day.html', {'form': form})

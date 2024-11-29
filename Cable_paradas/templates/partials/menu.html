@@ -14,10 +14,16 @@
           <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Inicio</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="{% url 'create_transaction_record' %}">Jornada Operacional</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="{% url 'create_record' %}">Crear Evento</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'list_of_stop' %}">Consultar eventos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'list_of_operational' %}">Consultar jornadas</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'grafico_datos' %}">Dashboard</a>

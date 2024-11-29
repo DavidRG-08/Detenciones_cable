@@ -132,3 +132,37 @@ class EventStopCode(models.Model):
     
     def __str__(self):
         return f"{self.event_type} - {self.related_object}"
+    
+
+class OperationTime(models.Model):
+    date = models.DateField()
+    start_time = models.TimeField()
+    horometer_start = models.DecimalField(max_digits=10, decimal_places=2)
+    end_time = models.TimeField()
+    horometer_end = models.DecimalField(max_digits=10, decimal_places=2)
+    operator = models.ForeignKey(User, on_delete=models.CASCADE)
+    total_time = models.CharField(blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        #Calcular duracion
+        if self.end_time and self.start_time:
+            start_datetime =  datetime.combine(datetime.min, self.start_time)
+            end_datetime = datetime.combine(datetime.min, self.end_time)
+            
+            # Si end_date es menor que start_date, asumimos que cruza la medianoche
+            if end_datetime < start_datetime:
+                end_datetime += timedelta(days=1)
+            
+            delta = end_datetime - start_datetime
+            hours, remainder = divmod(delta.seconds, 3600)
+            minutes, seconds = divmod(remainder, 60)
+
+            self.total_time = f"{hours}: {minutes:02d}"
+        else:
+            self.total_time = "0.00"
+            
+        super().save(*args, **kwargs)
+
+
+    def __str__(self):
+        return f"{self.date}"

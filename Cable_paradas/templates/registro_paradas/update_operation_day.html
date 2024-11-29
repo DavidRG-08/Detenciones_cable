@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Consultar jornadas{% endblock %}
+{% block content %}
+
+<div class="container mt-5">
+    <h1>Registros de operacion</h1>   
+</div>
+<div>
+    <form method="post">
+        <div>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success">Actualizar</button>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}
