@@ -138,14 +138,14 @@ class OperationTime(models.Model):
     date = models.DateField()
     start_time = models.TimeField()
     horometer_start = models.DecimalField(max_digits=10, decimal_places=2)
-    end_time = models.TimeField()
-    horometer_end = models.DecimalField(max_digits=10, decimal_places=2)
+    end_time = models.TimeField(blank=True, null=True)
+    horometer_end = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     operator = models.ForeignKey(User, on_delete=models.CASCADE)
-    total_time = models.CharField(blank=True, null=True)
+    total_time = models.CharField(max_length=10, blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        #Calcular duracion
-        if self.end_time and self.start_time:
+        #Calcular duracion si ambos campos estan completos
+        if self.start_time and self.end_time:
             start_datetime =  datetime.combine(datetime.min, self.start_time)
             end_datetime = datetime.combine(datetime.min, self.end_time)
             
@@ -159,7 +159,7 @@ class OperationTime(models.Model):
 
             self.total_time = f"{hours}: {minutes:02d}"
         else:
-            self.total_time = "0.00"
+            self.total_time = None
             
         super().save(*args, **kwargs)
 
