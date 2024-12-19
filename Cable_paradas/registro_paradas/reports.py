@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView
 from django.http.response import HttpResponse
-from .models import StopRegistration, OperationTime
+from .models import StopRegistration, OperationTime, EventStopCode
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment
 
@@ -42,23 +42,68 @@ class ReporterExcelStop(TemplateView):
         cont = 4
 
         # Itera sobre el queryset filtrado
+        # for stop in stop_reg:
+        #     ws.cell(row= cont, column= 1).value = str(stop.registration_date)
+        #     ws.cell(row= cont, column= 2).value = str(stop.stop_code)
+        #     ws.cell(row= cont, column= 3).value = str(stop.station)
+        #     ws.cell(row= cont, column= 4).value = str(stop.start_date)
+        #     ws.cell(row= cont, column= 5).value = str(stop.end_date)
+        #     ws.cell(row= cont, column= 6).value = str(stop.stop_time)
+        #     ws.cell(row= cont, column= 7).value = str(stop.cabin)
+        #     ws.cell(row= cont, column= 8).value = str(stop.cabin2)
+        #     ws.cell(row= cont, column= 9).value = str(stop.event_type)
+        #     ws.cell(row= cont, column= 10).value = str(stop.shift)
+        #     ws.cell(row= cont, column= 11).value = str(stop.observation)
+        #     ws.cell(row= cont, column= 12).value = str(stop.inputable)
+        #     ws.cell(row= cont, column= 13).value = str(stop.operator)
+            
+            
+        #     cont +=1
+
+        # Modificacion para el event stop code
+
         for stop in stop_reg:
-            ws.cell(row= cont, column= 1).value = str(stop.registration_date)
-            ws.cell(row= cont, column= 2).value = str(stop.stop_code)
-            ws.cell(row= cont, column= 3).value = str(stop.station)
-            ws.cell(row= cont, column= 4).value = str(stop.start_date)
-            ws.cell(row= cont, column= 5).value = str(stop.end_date)
-            ws.cell(row= cont, column= 6).value = str(stop.stop_time)
-            ws.cell(row= cont, column= 7).value = str(stop.cabin)
-            ws.cell(row= cont, column= 8).value = str(stop.cabin2)
-            ws.cell(row= cont, column= 9).value = str(stop.event_type)
-            ws.cell(row= cont, column= 10).value = str(stop.shift)
-            ws.cell(row= cont, column= 11).value = str(stop.observation)
-            ws.cell(row= cont, column= 12).value = str(stop.inputable)
-            ws.cell(row= cont, column= 13).value = str(stop.operator)
-            
-            
-            cont +=1
+            # Proceso para resolver el stop_code_name
+            stop_code_name = "Code no found"
+            if stop.stop_code:
+                try:
+                    stop_code_obj = EventStopCode.objects.get(
+                        event_type=stop.event_type,
+                        object_id=stop.stop_code
+                    )
+                    content_type = stop_code_obj.content_type
+                    related_object = content_type.get_object_for_this_type(pk=stop_code_obj.object_id)
+
+                    if hasattr(related_object, 'description'):
+                        stop_code_name = related_object.code + " - " + related_object.description
+                    elif hasattr(related_object, 'event_name'):
+                        stop_code_name = related_object.event_name
+                    elif hasattr(related_object, 'detention_name'):
+                        stop_code_name = related_object.detention_name
+                    elif hasattr(related_object, 'speed_name'):
+                        stop_code_name = related_object.speed_name
+                    else:
+                        stop_code_name = "Nombre no encontrado"
+                except EventStopCode.DoesNotExist:
+                    stop_code_name = "Code no found"
+
+            # Agregar datos al Excel
+            ws.cell(row=cont, column=1).value = str(stop.registration_date)
+            ws.cell(row=cont, column=2).value = stop_code_name  # Usa el nombre resuelto
+            ws.cell(row=cont, column=3).value = str(stop.station)
+            ws.cell(row=cont, column=4).value = str(stop.start_date)
+            ws.cell(row=cont, column=5).value = str(stop.end_date)
+            ws.cell(row=cont, column=6).value = str(stop.stop_time)
+            ws.cell(row=cont, column=7).value = str(stop.cabin)
+            ws.cell(row=cont, column=8).value = str(stop.cabin2)
+            ws.cell(row=cont, column=9).value = str(stop.event_type)
+            ws.cell(row=cont, column=10).value = str(stop.shift)
+            ws.cell(row=cont, column=11).value = str(stop.observation)
+            ws.cell(row=cont, column=12).value = str(stop.inputable)
+            ws.cell(row=cont, column=13).value = str(stop.operator)
+
+            cont += 1
+
         
         # Ajustar el ancho de las columnas
         for col_num in range(1, len(headers) + 1):

@@ -141,7 +141,7 @@ def list_of_events(request):
             
             # verificar dinamicamente si el objeto relacionado tiene un campo 'code', 'event_name', 'detention_name', 'speed_name'
             if hasattr(related_object, 'description'):
-                registro.stop_code_name = related_object.code
+                registro.stop_code_name = related_object.code + " - " +related_object.description
             elif hasattr(related_object, 'event_name'):
                 registro.stop_code_name = related_object.event_name
             elif hasattr(related_object, 'detention_name'):
