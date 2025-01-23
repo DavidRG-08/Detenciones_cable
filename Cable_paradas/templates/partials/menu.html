@@ -13,18 +13,41 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Inicio</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'create_transaction_record' %}">Jornada Operacional</a>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Eventos
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'create_record' %}">Crear Evento</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{% url 'list_of_stop' %}">Consultar Eventos</a></li>
+          </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'create_record' %}">Crear Evento</a>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Operacional
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'create_transaction_record' %}">Crear Jornada Operacional</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{% url 'list_of_operational' %}">Consultar Jornadas</a></li>
+          </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'list_of_stop' %}">Consultar eventos</a>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Datos Tecnicos
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'create_technical_data' %}">Insertar registro</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{% url 'list_technical_data' %}">Consultar registros</a></li>
+          </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'list_of_operational' %}">Consultar jornadas</a>
-        </li>
+
+
         <li class="nav-item">
           <a class="nav-link" href="{% url 'grafico_datos' %}">Dashboard</a>
         </li>

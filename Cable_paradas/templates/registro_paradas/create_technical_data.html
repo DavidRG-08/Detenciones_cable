@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Inicio y fin de la operacion{% endblock %}
+
+{% block extra_css %}
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container mt-5">
+    <h1>Datos tecnicos</h1>
+    {{ form.media }}
+    <form method="post" id="technical-data-form">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          {{ form.date.label_tag }}
+          {{ form.date }}
+        </div>
+        <div class="col-md-6 mb-3">
+          {{ form.time.label_tag }}
+          {{ form.time }}
+        </div>
+        <div class="col-md-3 mb-3">
+            {{ form.temp_motor_variador.label_tag }}
+            {{ form.temp_motor_variador }}
+          </div>
+        <div class="col-md-3 mb-3">
+          {{ form.temp_cuarto_variador.label_tag }}
+          {{ form.temp_cuarto_variador }}
+        </div>
+        <div class="col-md-3 mb-3">
+          {{ form.temp_reductor.label_tag }}
+          {{ form.temp_reductor }}
+        </div>
+        <div class="col-md-3 mb-3">
+          {{ form.temp_reductor_panel.label_tag }}
+          {{ form.temp_reductor_panel }}
+        </div>
+        <div class="col-md-3 mb-3">
+          {{ form.par.label_tag }}
+          {{ form.par }}
+        </div>
+        <div class="col-md-3 mb-3">
+            {{ form.presion_fs_bar.label_tag }}
+            {{ form.presion_fs_bar }}
+          </div>
+        <div class="col-md-3 mb-3">
+          {{ form.presion_fe_bar.label_tag }}
+          {{ form.presion_fe_bar }}
+        </div>
+        <div class="col-md-3 mb-3">
+          {{ form.carro_tensor_tunal.label_tag }}
+          {{ form.carro_tensor_tunal }}
+        </div>
+        <div class="col-md-3 mb-3">
+          {{ form.carro_tensor_paraiso.label_tag }}
+          {{ form.carro_tensor_paraiso }}
+        </div>
+        <div class="col-md-3 mb-3">
+          {{ form.longitud_de_linea.label_tag }}
+          {{ form.longitud_de_linea }}
+        </div>
+        <div class="col-md-3 mb-3">
+            {{ form.viento_p06.label_tag }}
+            {{ form.viento_p06 }}
+          </div>
+        <div class="col-md-3 mb-3">
+          {{ form.viento_p16.label_tag }}
+          {{ form.viento_p16 }}
+        </div>
+        <div class="col-md-3 mb-3">
+          {{ form.viento_p23.label_tag }}
+          {{ form.viento_p23 }}
+        </div>
+        <div class="col-md-12">
+          <button type="submit" class="btn btn-success">Guardar Registro</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+
+
+{% endblock %}

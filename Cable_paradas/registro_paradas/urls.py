@@ -19,4 +19,7 @@ urlpatterns = [
     path('report_operation/', views.generate_report_operation_day, name='report_operation'),
     path('transaction_record/update/<pk>', views.update_operation_day, name='record_update'),
 
+    # Pestaña datos tecnicos
+    path('create_technical_data/', views.create_technical_data, name='create_technical_data'),
+    path('list_technical_data/', views.technical_data_list, name='list_technical_data'),
 ]

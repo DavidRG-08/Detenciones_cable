@@ -166,3 +166,26 @@ class OperationTime(models.Model):
 
     def __str__(self):
         return f"{self.date}"
+
+
+class TechnicalData(models.Model):
+    date = models.DateField()
+    time = models.TimeField()
+    temp_motor_variador = models.IntegerField()
+    temp_cuarto_variador = models.DecimalField(max_digits=10, decimal_places=2)
+    temp_reductor = models.DecimalField(max_digits=10, decimal_places=2)
+    temp_reductor_panel = models.IntegerField()
+    par = models.IntegerField()
+    presion_fs_bar = models.IntegerField()
+    presion_fe_bar = models.IntegerField()
+    carro_tensor_tunal = models.DecimalField(max_digits=10, decimal_places=2)
+    carro_tensor_paraiso = models.DecimalField(max_digits=10, decimal_places=2)
+    longitud_de_linea = models.IntegerField()
+    viento_p06 = models.IntegerField()
+    viento_p16 = models.IntegerField()
+    viento_p23 = models.IntegerField()
+    operator = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+    def __str__(self):
+        return f"{self.date}"

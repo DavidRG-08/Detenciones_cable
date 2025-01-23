@@ -1,7 +1,7 @@
-from .forms import FormRegister, LoginForm, RegistroForm, FormOperatingDay
+from .forms import FormRegister, LoginForm, RegistroForm, FormOperatingDay, FormTechnicalData
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .models import StopRegistration, EventStopCode, OperationTime
+from .models import StopRegistration, EventStopCode, OperationTime, TechnicalData
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from .reports import ReporterExcelStop, ReporterExcelOperatorDay
@@ -305,3 +305,51 @@ def update_operation_day(request, pk):
         form = FormOperatingDay(instance=instancia)
     
     return render(request, 'registro_paradas/update_operation_day.html', {'form': form})
+
+
+#  Crea el evento de parada
+@login_required
+def create_technical_data(request):
+    if request.method == 'POST':
+        form = FormTechnicalData(request.POST)
+        if form.is_valid():
+            register = form.save(commit=False)
+            register.operator = request.user
+            form = form.save()
+            
+            messages.success(request, 'Evento creado correctamente')
+            return redirect('create_technical_data')
+        else:
+            messages.error(request, 'Hubo un error al registrar el evento, validar la informacion ingresada')
+    else:
+        form = FormTechnicalData()
+    
+    return render(request, 'registro_paradas/create_technical_data.html', {'form': form})
+
+
+@login_required
+def technical_data_list(request):
+    records = TechnicalData.objects.all().order_by('-date')
+
+    # Rango de fechas
+    start_date_op = request.GET.get('start_date_op')
+    end_date_op = request.GET.get('end_date_op')
+
+    if start_date_op and end_date_op:
+        try:
+            start_date_op = datetime.strptime(start_date_op, '%Y-%m-%d').date()
+            end_date_op = datetime.strptime(end_date_op, '%Y-%m-%d').date()
+
+            records = records.filter(
+                date__gte = start_date_op,
+                date__lte = end_date_op
+            )
+        except ValueError:
+            pass
+    
+
+    paginator = Paginator(records, 20)
+    page_number = request.GET.get('page')
+    page_obj_ope = paginator.get_page(page_number)
+
+    return render(request, 'registro_paradas/list_technical_data.html', {'page_obj_ope': page_obj_ope})
