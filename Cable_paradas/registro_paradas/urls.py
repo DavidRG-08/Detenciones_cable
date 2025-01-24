@@ -22,4 +22,5 @@ urlpatterns = [
     # Pestaña datos tecnicos
     path('create_technical_data/', views.create_technical_data, name='create_technical_data'),
     path('list_technical_data/', views.technical_data_list, name='list_technical_data'),
+    path('report_technical_data', views.generate_report_technical_data, name='report_technical_data'),
 ]

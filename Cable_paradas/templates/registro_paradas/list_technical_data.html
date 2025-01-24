@@ -7,7 +7,7 @@
     <h1>Registros de datos tecnicos</h1>   
 
     <!-- Formulario de filtro de fechas -->
-    <form method="get" class="mb-4" action="{% url 'list_of_operational' %}">
+    <form method="get" class="mb-4" action="{% url 'list_technical_data' %}">
         <div class="container">
             <div class="row align-items-center">
                 <div class="form-group col-md-6 d-flex justify-content-right">
@@ -24,7 +24,7 @@
                 </div>
                 <!-- Boton reporte excel -->
                 <div class="form-group col-md-6 d-flex justify-content-right">
-                    <a href="{% url 'report_operation' %}?start_date={{ request.GET.start_date_op }}&end_date={{ request.GET.end_date_op }}" 
+                    <a href="{% url 'report_technical_data' %}?start_date={{ request.GET.start_date_op }}&end_date={{ request.GET.end_date_op }}" 
                         class="btn btn-outline-success w-100" role="button" aria-pressed="true">Exportar a Excel</a>
 
                     

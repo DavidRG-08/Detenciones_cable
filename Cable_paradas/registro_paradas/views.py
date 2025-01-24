@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .models import StopRegistration, EventStopCode, OperationTime, TechnicalData
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
-from .reports import ReporterExcelStop, ReporterExcelOperatorDay
+from .reports import ReporterExcelStop, ReporterExcelOperatorDay, ReporterExcelTechnicalData
 from django.contrib import messages
 from django.db.models import Q
 from django.http import JsonResponse
@@ -353,3 +353,28 @@ def technical_data_list(request):
     page_obj_ope = paginator.get_page(page_number)
 
     return render(request, 'registro_paradas/list_technical_data.html', {'page_obj_ope': page_obj_ope})
+
+
+# Vista para descargar el reporte en excel de datos tecnicos
+@login_required
+def generate_report_technical_data(request):
+    # Obtener los filtros de fecha
+    start_date_op = request.GET.get('start_date_op')
+    end_date_op = request.GET.get('end_date_op')
+    
+    # Parsear las fechas usando parse_date para convertir de string a date
+    if start_date_op:
+        start_date_op = parse_date(start_date_op)
+    if end_date_op:
+        end_date_op = parse_date(end_date_op)
+    
+    print(f"Start date: {start_date_op}, End Date: {end_date_op}")
+    
+    # Consulta para filtrar los registros
+    queryset = TechnicalData.objects.all()
+    if start_date_op and end_date_op:
+        queryset = queryset.filter(date__gte = start_date_op, date__lte = end_date_op)
+        
+    # Generar el reporte solo con los registros filtrados
+    report = ReporterExcelTechnicalData(queryset)
+    return report.get(request)
