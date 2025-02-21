@@ -1,4 +1,4 @@
-from .forms import FormRegister, LoginForm, RegistroForm, FormOperatingDay, FormTechnicalData
+from .forms import FormRegister, LoginForm, FormOperatingDay, FormTechnicalData, FormRegisterUpdate
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import StopRegistration, EventStopCode, OperationTime, TechnicalData
@@ -60,30 +60,7 @@ def home(request):
     return render(request, 'registro_paradas/index.html', context)
 
 
-# Crear y registrar usuarios 
-@login_required
-def view_register(request):
-    if request.method == 'POST':
-        user_form = RegistroForm(request.POST)
-        # profile_form = ProfileForm(request.POST)
-        if user_form.is_valid():
-            # Crea y guarda el usuario
-            user = user_form.save(commit=False)
-            user.set_password(user_form.cleaned_data['password'])
-            user.save()
-            messages.success(request, 'Usuario creado')
-
-            return redirect('register_user')
-        else:
-            messages.error(request, 'Hubo un error al crear el usuario.')
-    else:
-        user_form = RegistroForm()
-        
-    
-    return render(request, 'registration/register_user.html', {'user_form': user_form})
-
-
-# Crea el evento de parada
+# Crea el evento de detencion
 @login_required
 def create_event(request):
     if request.method == 'POST':
@@ -101,9 +78,50 @@ def create_event(request):
         form = FormRegister()
     
     return render(request, 'registro_paradas/create_record.html', {'form': form})
+
+
+# VIsta para cargar las opciones por evento
+@login_required
+def load_stop_codes(request):
+    event_type_id = request.GET.get('event_type_id')
+    
+    if event_type_id:
+        event_stop_codes = EventStopCode.objects.filter(event_type_id=event_type_id)
+        stop_code_list = []
+        
+        for esc in event_stop_codes:
+            obj = esc.related_object # Obtiene el objeto relacionado
+            
+            if hasattr(obj, 'code'):
+                stop_code_list.append({'id': obj.id, 'name': obj.code + " - " + obj.description})
+            if hasattr(obj, 'event_name'):
+                stop_code_list.append({'id': obj.id, 'name': obj.event_name})
+            elif hasattr(obj, 'detention_name'):
+                stop_code_list.append({'id': obj.id, 'name': obj.detention_name})
+            elif hasattr(obj, 'speed_name'):
+                stop_code_list.append({'id': obj.id, 'name': obj.speed_name})
+        
+        return JsonResponse(stop_code_list, safe=False)
+    
+    return JsonResponse({'error': 'Invalid event_type'}, status=400)
+
+
+# Actualiza registros de detencion
+def update_detenciones(request, pk):
+    instancia = get_object_or_404(StopRegistration, pk=pk)
+    if request.method == 'POST':
+        form = FormRegisterUpdate(request.POST, instance=instancia)
+        if form.is_valid():
+            form.save()
+            return redirect('list_of_stop')  # URL redireccion success
+    
+    else:
+        form = FormRegisterUpdate(instance=instancia)
+    
+    return render(request, 'registro_paradas/update_record.html', {'form': form})
     
     
-# # Accede al listado de eventos registrados
+# Accede al listado de eventos registrados
 @login_required
 def list_of_events(request):
     # Obtiene todos los registros del modelo
@@ -164,12 +182,6 @@ def list_of_events(request):
     return render(request, 'registro_paradas/list_stop.html', {'page_obj': page_obj})
 
 
-# VIsta para acceder a dashboard creados en power BI
-@login_required
-def grafico_datos(request):
-    return render(request, 'registro_paradas/grafico.html')
-
-
 # Vista para descargar el reporte en excel de detenciones
 @login_required
 def generate_report(request):
@@ -195,30 +207,11 @@ def generate_report(request):
     return report.get(request)
 
 
-# VIsta para cargar las opciones por evento
+# VIsta para acceder a dashboard creados en power BI
 @login_required
-def load_stop_codes(request):
-    event_type_id = request.GET.get('event_type_id')
-    
-    if event_type_id:
-        event_stop_codes = EventStopCode.objects.filter(event_type_id=event_type_id)
-        stop_code_list = []
-        
-        for esc in event_stop_codes:
-            obj = esc.related_object # Obtiene el objeto relacionado
-            
-            if hasattr(obj, 'code'):
-                stop_code_list.append({'id': obj.id, 'name': obj.code + " - " + obj.description})
-            if hasattr(obj, 'event_name'):
-                stop_code_list.append({'id': obj.id, 'name': obj.event_name})
-            elif hasattr(obj, 'detention_name'):
-                stop_code_list.append({'id': obj.id, 'name': obj.detention_name})
-            elif hasattr(obj, 'speed_name'):
-                stop_code_list.append({'id': obj.id, 'name': obj.speed_name})
-        
-        return JsonResponse(stop_code_list, safe=False)
-    
-    return JsonResponse({'error': 'Invalid event_type'}, status=400)
+def grafico_datos(request):
+    return render(request, 'registro_paradas/grafico.html')
+
 
 
 # Vista para registrar la hora de inicio y fin de la operacion
@@ -240,6 +233,7 @@ def operating_day(request):
     return render(request, 'registro_paradas/create_transaction_record.html', {'form': form})
 
 
+# VIsta para ver los registros de operacion
 @login_required
 def operational_day_list(request):
     records = OperationTime.objects.all().order_by('-date')
@@ -293,6 +287,7 @@ def generate_report_operation_day(request):
     return report.get(request)
 
 
+# Vista para actualizar los registros de operacion
 def update_operation_day(request, pk):
     instancia = get_object_or_404(OperationTime, pk=pk)
     if request.method == 'POST':
@@ -307,7 +302,7 @@ def update_operation_day(request, pk):
     return render(request, 'registro_paradas/update_operation_day.html', {'form': form})
 
 
-#  Crea el evento de parada
+#  Crea el registro tecnico
 @login_required
 def create_technical_data(request):
     if request.method == 'POST':

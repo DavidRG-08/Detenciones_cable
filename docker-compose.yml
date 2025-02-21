@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: postgres:latest
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: orfeo
+      POSTGRES_PASSWORD: A12345
+      POSTGRES_DB: operacion_cable
+
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - my_network
+
+volumes:
+  pgdata:
+    driver: local
+
+networks:
+  my_network:

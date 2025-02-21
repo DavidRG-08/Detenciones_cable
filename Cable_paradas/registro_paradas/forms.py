@@ -8,35 +8,11 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
 
 
-class RegistroForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}), label="Contraseña")
-    
-    class Meta:
-        model = User
-        fields = [ 'first_name', 'last_name', 'username', 'email', 'password']
-        
-        labels = {
-            "first_name": "Nombre",
-            "last_name": "Apellido",
-            "username": "Usuario",
-            "email": "correo electronico",
-            "password": "Contraseña",
-        }
-        
-        widgets = {
-            'email': forms.EmailInput(attrs={
-                'class': 'form-control', 
-                'placeholder': 'Ingrese su correo'
-                }),
-        }
-
-    
-class FormRegister(forms.ModelForm):
-    
-    
+class FormRegister(forms.ModelForm):    
     class Meta:
         model = StopRegistration
         fields = [
+            'event_type',
             'registration_date',
             'stop_code',
             'station', 
@@ -45,7 +21,6 @@ class FormRegister(forms.ModelForm):
             'cabin',
             'cabin2',
             'shift',
-            'event_type',
             'observation',
         ]
         
@@ -80,6 +55,32 @@ class FormRegister(forms.ModelForm):
                 
             return cleaned_data
         
+
+
+class FormRegisterUpdate(forms.ModelForm):    
+    class Meta:
+        model = StopRegistration
+        fields = [
+            'registration_date',
+            'station', 
+            'start_date', 
+            'end_date', 
+        ]
+        
+        labels = {
+            "registration_date": "Fecha de registro",
+            "station": "Estacion",
+            "start_date": "Hora de parada",
+            "end_date": "Hora inicio de operacion",
+        }
+        
+        widgets = {
+            'registration_date': forms.DateInput(attrs={'type': 'date'}),
+            'start_date': forms.TimeInput(attrs={'type': 'time', 'class': 'form-control', 'step': 1}),
+            'end_date': forms.TimeInput(attrs={'type': 'time', 'class': 'form-control', 'step': 1})
+        }
+        
+            
         
 class FormOperatingDay(forms.ModelForm):
     class Meta:

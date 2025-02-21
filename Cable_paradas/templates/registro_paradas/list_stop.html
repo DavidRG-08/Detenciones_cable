@@ -68,6 +68,8 @@
                     <td>{{ registro.stop_code_name }}</td>
                     <td>{{ registro.operator }}</td>
                     <td>{{ registro.observation }}</td>
+                    <td><a href="{% url 'update_detencion' registro.id %}" class="btn btn-outline-warning" role="button" aria-pressed="true">Editar</a></td>
+
                 </tr>
                 {% empty %}
                 <tr>

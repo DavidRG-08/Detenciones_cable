@@ -1,12 +1,15 @@
 from django.contrib import admin
-from .models import Station, Cabin, Shift, StopRegistration, EventStopCode, StopCode, OperationTime, TechnicalData
+from .models import *
 
 admin.site.register(StopCode)
 admin.site.register(Station)
 admin.site.register(Cabin)
+admin.site.register(Cabin2)
 admin.site.register(Shift)
 admin.site.register(OperationTime)
 admin.site.register(TechnicalData)
+admin.site.register(EventType)
+admin.site.register(Evacuacion)
 
 
 class StopRegister(admin.ModelAdmin):
